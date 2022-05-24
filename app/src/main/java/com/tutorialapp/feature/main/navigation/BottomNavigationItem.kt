@@ -1,5 +1,7 @@
 package com.tutorialapp.feature.main.navigation
 
+import com.tutorialapp.R
+
 sealed class BottomNavigationItem {
     abstract val routeName: String
     abstract val title: Int
@@ -7,13 +9,13 @@ sealed class BottomNavigationItem {
 
     object CreateTutorial : BottomNavigationItem(){
         override val routeName = "create"
-        override val title = 1
-        override val icon = 2
+        override val title = R.string.create_tutorial_navigation
+        override val icon = R.drawable.ic_restaurant_white_24dp
     }
 
     object OpenTutorial : BottomNavigationItem(){
         override val routeName = "open"
-        override val title = 11
-        override val icon = 22
+        override val title = R.string.open_tutorial_navigation
+        override val icon = R.drawable.ic_baseline_shopping_cart_24
     }
 }
