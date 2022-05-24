@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Vincent/Documents/Uni/SS22/AppDevelopment/tutorialApp/app/src/main/res/drawable/ic_baseline_add_shopping_cart_24.xml" value="0.1995" />
+        <entry key="..\:/Users/Vincent/Documents/Uni/SS22/AppDevelopment/tutorialApp/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.1995" />
+        <entry key="..\:/Users/Vincent/Documents/Uni/SS22/AppDevelopment/tutorialApp/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.1995" />
+        <entry key="..\:/Users/Vincent/Documents/Uni/SS22/AppDevelopment/tutorialApp/app/src/main/res/drawable/ic_restaurant_white_24dp.xml" value="0.1995" />
       </map>
     </option>
   </component>

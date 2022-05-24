@@ -16,6 +16,6 @@ sealed class BottomNavigationItem {
     object OpenTutorial : BottomNavigationItem(){
         override val routeName = "open"
         override val title = R.string.open_tutorial_navigation
-        override val icon = R.drawable.ic_baseline_shopping_cart_24
+        override val icon = R.drawable.circle
     }
 }
