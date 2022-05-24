@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.tutorialapp.feature.main.model.AppState
+import com.tutorialapp.feature.main.model.appState
 import com.tutorialapp.feature.main.navigation.MainBottomNavigation
 
 @Composable

@@ -7,14 +7,14 @@ data class AppState(
     val loadedTutorials: List<Tutorial>,
 )
 
-var appstate = mutableStateOf(
+var appState = mutableStateOf(
     AppState(
         loadedTutorials = emptyList(),
     )
 )
 
 fun loadTutorial(tutorial: Tutorial){
-    appstate.value = appstate.value.copy(
-        loadedTutorials = appstate.value.loadedTutorials.plus(tutorial)
+    appState.value = appState.value.copy(
+        loadedTutorials = appState.value.loadedTutorials.plus(tutorial)
     )
 }
