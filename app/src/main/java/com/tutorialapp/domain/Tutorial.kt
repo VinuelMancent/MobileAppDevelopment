@@ -1,5 +1,6 @@
 package com.tutorialapp.domain
 
+//ToDo: sich überlegen was alles in einem Tutorial vorhanden sein muss
 data class Tutorial(
     val id: String,
     val steps: List<TutorialStep>
