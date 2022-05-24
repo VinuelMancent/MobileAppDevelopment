@@ -2,6 +2,7 @@ package com.tutorialapp.feature.main.model
 
 import androidx.compose.runtime.mutableStateOf
 import com.tutorialapp.domain.Tutorial
+import com.tutorialapp.domain.allTutorials
 
 data class AppState(
     val loadedTutorials: List<Tutorial>,
@@ -9,7 +10,7 @@ data class AppState(
 
 var appState = mutableStateOf(
     AppState(
-        loadedTutorials = emptyList(),
+        loadedTutorials = allTutorials,
     )
 )
 

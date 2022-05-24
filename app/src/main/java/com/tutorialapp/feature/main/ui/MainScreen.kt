@@ -13,12 +13,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tutorialapp.feature.main.model.AppState
 import com.tutorialapp.feature.main.model.appState
+import com.tutorialapp.feature.main.navigation.MainBottomNavigation
 import com.tutorialapp.feature.main.navigation.MainNavigationGraph
 
 @Composable
 fun MainScreen(){
     val navController = rememberNavController()
     val state: AppState by remember { appState }
+
     Scaffold(
         topBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -27,9 +29,9 @@ fun MainScreen(){
                 title = {"Platzhalter"},
             )
         },
-        /*bottomBar = {
+        bottomBar = {
             MainBottomNavigation(navController, state.loadedTutorials)
-        }*/
+        }
     ){
             innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
