@@ -18,6 +18,7 @@ fun MainBottomNavigation(navController: NavController, tutorial: List<Tutorial>)
         val currentRoute = navBackStackEntry?.destination?.route
 
         listOf(
+            BottomNavigationItem.Start,
             BottomNavigationItem.OpenTutorial,
             BottomNavigationItem.CreateTutorial,
         ).forEach { navItem ->

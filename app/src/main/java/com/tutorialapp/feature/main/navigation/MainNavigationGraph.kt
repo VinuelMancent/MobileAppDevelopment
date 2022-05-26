@@ -8,10 +8,14 @@ import com.tutorialapp.domain.allTutorials
 import com.tutorialapp.feature.create.CreateScreen
 import com.tutorialapp.feature.main.model.AppState
 import com.tutorialapp.feature.open.OpenScreen
+import com.tutorialapp.feature.start.StartScreen
 
 @Composable
 fun MainNavigationGraph(state: AppState, navController: NavHostController){
-    NavHost(navController, startDestination = "create"){
+    NavHost(navController, startDestination = "start"){
+        composable(BottomNavigationItem.Start.routeName){
+            StartScreen()
+        }
         composable(BottomNavigationItem.CreateTutorial.routeName){
             CreateScreen()
         }

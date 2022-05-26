@@ -7,6 +7,11 @@ sealed class BottomNavigationItem {
     abstract val title: Int
     abstract val icon: Int
 
+    object Start: BottomNavigationItem(){
+        override val routeName = "start"
+        override val title = R.string.startscreen_navigation
+        override val icon = R.drawable.ic_shopping_cart_checkout_white_24dp //platzhalter
+    }
     object CreateTutorial : BottomNavigationItem(){
         override val routeName = "create"
         override val title = R.string.create_tutorial_navigation
