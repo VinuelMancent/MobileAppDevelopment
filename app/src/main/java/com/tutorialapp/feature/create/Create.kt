@@ -2,11 +2,15 @@ package com.tutorialapp.feature.create
 
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import com.tutorialapp.domain.TutorialStep
 
@@ -31,9 +35,8 @@ val step3 = TutorialStep(
 //
 
 
-private var steps:MutableList<TutorialStep> = mutableListOf(step1, step2, step3)
+private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
 private var counter: Int = 0
-
 
 
 @Composable
@@ -61,6 +64,7 @@ fun tutorialNameTextField(){
     )
 }
 
+/*
 @Composable
 fun showExistingSteps(){
     //für jeden bereits vorhandenen schritt
@@ -68,8 +72,20 @@ fun showExistingSteps(){
         Text(it.id.toString())
         Text(it.content)
     }
+}*/
 
+@Composable
+fun showExistingSteps(){
+    //für jeden bereits vorhandenen schritt
+    LazyColumn (
+        Modifier.fillMaxWidth(),
+            )
+    {
+        itemsIndexed(steps) {
+            index, item ->  Text(item.content)
+        }
 
+    }
 }
 
 @Composable
@@ -90,7 +106,13 @@ fun addStep(){
             )
             textFieldValue = ""
             counter++
-            steps.add(step) //hinzufügen klappt, es muss nur auch jedes mal neu geladen werden
+            steps.add(step)
+            //hinzufügen klappt, es muss nur auch jedes mal neu geladen werden
+            reload()
         }
     ){}
+}
+
+fun reload(){
+
 }
