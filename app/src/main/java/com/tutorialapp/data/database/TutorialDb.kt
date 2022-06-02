@@ -10,4 +10,5 @@ data class TutorialDb(
     val id: String,
     @PrimaryKey
     val name: String,
+    //Einzelschritte evtl direkt hier speichern, oder extra db anlegen?
 )
