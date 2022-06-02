@@ -12,10 +12,14 @@ val allTutorials = listOf(
         id = "1",
         steps = listOf(
             TutorialStep(
-                id = "1",
+                id = 1,
+                content = "",
+                image = "",
             ),
             TutorialStep(
-                id = "2",
+                id = 2,
+                content = "",
+                image = "",
             )
         )
     ),
@@ -23,10 +27,14 @@ val allTutorials = listOf(
         id = "2",
         steps = listOf(
             TutorialStep(
-                id = "1",
+                id = 1,
+                content = "",
+                image = "",
             ),
             TutorialStep(
-                id = "2",
+                id = 2,
+                content = "",
+                image = "",
             )
         )
     )
