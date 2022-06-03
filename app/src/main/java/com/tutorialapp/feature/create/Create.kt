@@ -1,6 +1,8 @@
 package com.tutorialapp.feature.create
 
-
+import androidx.camera.core.*
+import androidx.camera.core.ImageCapture.Metadata
+import androidx.camera.core.ImageCapture
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import com.tutorialapp.domain.TutorialStep
+import java.io.File
 
 
 //test to simply try to print steps
@@ -38,16 +41,16 @@ val step3 = TutorialStep(
 private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
 private var counter: Int = 0
 
-
+//SCHÖN MACHEN
 @Composable
 fun Create(){
 
     Column {
-        tutorialNameTextField()
+        tutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
-        showExistingSteps()
+        showExistingSteps() //übersicht machen, id, content und evtl image
         //Divider(color = Color.Blue, thickness = 1.dp)
-        addStep()
+        addStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
     }
 }
 
@@ -63,16 +66,6 @@ fun tutorialNameTextField(){
         maxLines = 1,
     )
 }
-
-/*
-@Composable
-fun showExistingSteps(){
-    //für jeden bereits vorhandenen schritt
-    steps.forEach{
-        Text(it.id.toString())
-        Text(it.content)
-    }
-}*/
 
 @Composable
 fun showExistingSteps(){
@@ -107,12 +100,22 @@ fun addStep(){
             textFieldValue = ""
             counter++
             steps.add(step)
-            //hinzufügen klappt, es muss nur auch jedes mal neu geladen werden
-            reload()
         }
     ){}
 }
 
-fun reload(){
+/*
+fun TakePicture() {
+    val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(...)).build()
+    imageCapture.takePicture(outputFileOptions, cameraExecutor,
+        object : ImageCapture.OnImageSavedCallback {
+            override fun onError(error: ImageCaptureException)
+            {
+                // insert your code here.
+            }
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                // insert your code here.
+            }
+        })
+}*/
 
-}
