@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tutorialapp.domain.Tutorial
 
+//open should show the name of the tutorial
 @Composable
 fun Open(tutorial: Tutorial){
     Card(
@@ -26,7 +27,7 @@ fun Open(tutorial: Tutorial){
         ){
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
-                        text = tutorial.id,
+                        text = tutorial.id.plus("     ").plus(tutorial.title),
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.subtitle1,
