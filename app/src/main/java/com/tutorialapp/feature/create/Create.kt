@@ -1,20 +1,27 @@
 package com.tutorialapp.feature.create
 
-import androidx.camera.core.*
-import androidx.camera.core.ImageCapture.Metadata
-import androidx.camera.core.ImageCapture
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import com.tutorialapp.domain.TutorialStep
+import androidx.compose.ui.text.TextStyle
 import java.io.File
 
 
@@ -22,17 +29,14 @@ import java.io.File
 val step1 = TutorialStep(
     id = 1,
     content = "c1",
-    image = "",
 )
 val step2 = TutorialStep(
     id = 2,
     content = "c2",
-    image = "",
 )
 val step3 = TutorialStep(
     id = 3,
     content = "c3",
-    image = "",
 )
 
 //
@@ -44,8 +48,7 @@ private var counter: Int = 0
 //SCHÖN MACHEN
 @Composable
 fun Create(){
-
-    Column {
+    Column() {
         tutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
         showExistingSteps() //übersicht machen, id, content und evtl image
@@ -63,7 +66,10 @@ fun tutorialNameTextField(){
             value = newText
         },
         label = { Text(text = "Name of the tutorial")},
-        maxLines = 1,
+        singleLine = true,
+        modifier = Modifier
+            .padding(8.dp)
+            .width(400.dp)
     )
 }
 
@@ -71,11 +77,21 @@ fun tutorialNameTextField(){
 fun showExistingSteps(){
     //für jeden bereits vorhandenen schritt
     LazyColumn (
-        Modifier.fillMaxWidth(),
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
             )
     {
         itemsIndexed(steps) {
-            index, item ->  Text(item.content)
+                index, item ->
+            Box(modifier = Modifier
+                .padding(3.dp)
+                .width(380.dp)
+                .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+                .wrapContentHeight(align = Alignment.CenterVertically)) {
+                Text(text = (item.id.toString()), Modifier.padding(vertical = 3.dp).padding(horizontal = 5.dp), textDecoration = TextDecoration.Underline)
+                Text(item.content, Modifier.padding(top = 25.dp).padding(horizontal = 5.dp).padding(bottom = 5.dp))
+            }
         }
 
     }
@@ -89,19 +105,23 @@ fun addStep(){
         value = content,
         onValueChange = {content = it},
         label = { Text("Describe this step")},
+        modifier = Modifier
+            .padding(8.dp)
+            .height(200.dp)
+            .width(400.dp)
+            .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
     )
     Button(
         onClick = {
             var step = TutorialStep(
                 id = counter,
                 content = content.text,
-                image =  ""
             )
             textFieldValue = ""
             counter++
             steps.add(step)
-        }
-    ){}
+        }, Modifier.padding(start = 8.dp)
+    ){Text("Add Step")}
 }
 
 /*
