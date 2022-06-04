@@ -3,26 +3,17 @@ package com.tutorialapp.feature.create
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import com.tutorialapp.domain.TutorialStep
-import androidx.compose.ui.text.TextStyle
-import java.io.File
 
 
 //test to simply try to print steps
@@ -48,17 +39,17 @@ private var counter: Int = 0
 //SCHÖN MACHEN
 @Composable
 fun Create(){
-    Column() {
-        tutorialNameTextField() //evtl enter taste deaktivieren
+    Column {
+        TutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
-        showExistingSteps() //übersicht machen, id, content und evtl image
-        //Divider(color = Color.Blue, thickness = 1.dp)
-        addStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
+        ShowExistingSteps() //evtl image hinzufügen
+        // Divider(color = Color.Blue, thickness = 1.dp)
+
     }
 }
 
 @Composable
-fun tutorialNameTextField(){
+fun TutorialNameTextField(){
     var value by remember { mutableStateOf(TextFieldValue("")) }
     OutlinedTextField(
         value = value,
@@ -74,7 +65,7 @@ fun tutorialNameTextField(){
 }
 
 @Composable
-fun showExistingSteps(){
+fun ShowExistingSteps(){
     //für jeden bereits vorhandenen schritt
     LazyColumn (
         Modifier
@@ -89,17 +80,24 @@ fun showExistingSteps(){
                 .width(380.dp)
                 .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
                 .wrapContentHeight(align = Alignment.CenterVertically)) {
-                Text(text = (item.id.toString()), Modifier.padding(vertical = 3.dp).padding(horizontal = 5.dp), textDecoration = TextDecoration.Underline)
-                Text(item.content, Modifier.padding(top = 25.dp).padding(horizontal = 5.dp).padding(bottom = 5.dp))
+                Text(text = (item.id.toString()),
+                    Modifier
+                        .padding(vertical = 3.dp)
+                        .padding(horizontal = 5.dp), textDecoration = TextDecoration.Underline)
+                Text(item.content,
+                    Modifier
+                        .padding(top = 25.dp)
+                        .padding(horizontal = 5.dp)
+                        .padding(bottom = 5.dp))
             }
         }
-
+        item { AddStep() }
     }
 }
 
 @Composable
-fun addStep(){
-    var textFieldValue: String = ""
+fun AddStep(){
+    val textFieldValue = ""
     var content by remember { mutableStateOf(TextFieldValue(textFieldValue)) }
     TextField(
         value = content,
@@ -109,17 +107,20 @@ fun addStep(){
             .padding(8.dp)
             .height(200.dp)
             .width(400.dp)
-            .background(color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+            .background(color = MaterialTheme.colors.surface, shape = RoundedCornerShape(8.dp))
     )
     Button(
         onClick = {
-            var step = TutorialStep(
-                id = counter,
-                content = content.text,
-            )
-            textFieldValue = ""
-            counter++
-            steps.add(step)
+            if (content != TextFieldValue("")) {
+                val step = TutorialStep(
+                    id = counter,
+                    content = content.text.trim(),
+                )
+                content = TextFieldValue("")
+                counter++
+                steps.add(step)
+            }
+
         }, Modifier.padding(start = 8.dp)
     ){Text("Add Step")}
 }
