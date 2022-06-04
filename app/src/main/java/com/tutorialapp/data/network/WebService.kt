@@ -13,11 +13,15 @@ import retrofit2.http.Path
 
 interface WebService {
 
-    @POST("/add")
+    @POST("add")
     suspend fun createTutorial(@Body tutorial: Tutorial): Response<ResponseBody>
 
+    @GET("getAll")
+    suspend fun getAllTutorials(): MutableList<Tutorial>
+
+
     companion object {
-        const val BASE_URL = "http://10.0.2.2:80/mongo";
+        const val BASE_URL = "http://10.0.2.2:80/mongo/";
     }
 }
 
