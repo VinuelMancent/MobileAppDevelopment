@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
 
 
 class StartScreenViewModel : ViewModel(){
-    fun loadTutorialsFromServer(list: MutableList<Tutorial>) : MutableList<Tutorial> {
+    fun loadTutorialsFromServer() : MutableList<Tutorial> {
         val loadTutorialsOnClick: () -> Unit = {
         }
         var tutorials: MutableList<Tutorial> = mutableListOf<Tutorial>()
@@ -30,6 +30,7 @@ class StartScreenViewModel : ViewModel(){
             System.out.println(tutorials.toString())
             //allTutorialsAsObjects = Gson().fromJson(allTutorials, Array<Tutorial>::class.java)
         }
+        System.out.println(tutorials)
         return tutorials
     }
 }
