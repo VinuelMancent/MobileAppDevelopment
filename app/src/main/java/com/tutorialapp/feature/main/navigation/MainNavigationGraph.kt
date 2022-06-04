@@ -20,7 +20,7 @@ fun MainNavigationGraph(state: AppState, navController: NavHostController){
             CreateScreen()
         }
         composable(BottomNavigationItem.OpenTutorial.routeName){
-            OpenScreen(allTutorials)
+            OpenScreen()
         }
     }
 }
