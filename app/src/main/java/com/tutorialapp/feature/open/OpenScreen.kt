@@ -9,17 +9,12 @@ import com.tutorialapp.domain.Tutorial
 import com.tutorialapp.domain.allTutorials
 
 @Composable
-fun OpenScreen(tutorial: List<Tutorial>){
-    val scrollState = rememberLazyListState()
-    LazyColumn(state = scrollState) {
-        this.items(allTutorials.sortedBy { it.id }){ tutorial ->
-            Open(tutorial)
-        }
-    }
+fun OpenScreen(){
+    Open()
 }
 
 @Preview
 @Composable
 fun OpenScreen_Preview() {
-    OpenScreen(allTutorials)
+    OpenScreen()
 }
