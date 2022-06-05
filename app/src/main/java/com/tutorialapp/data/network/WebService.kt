@@ -13,8 +13,8 @@ import retrofit2.http.Path
 
 interface WebService {
 
-    @POST("add")
-    suspend fun createTutorial(@Body tutorial: Tutorial): Response<ResponseBody>
+    @PUT("add")
+    suspend fun createTutorial(@Body json: Tutorial): Response<ResponseBody>
 
     @GET("getAll")
     suspend fun getAllTutorials(): MutableList<Tutorial>

@@ -4,7 +4,7 @@ import com.google.gson.Gson
 
 //ToDo: sich überlegen was alles in einem Tutorial vorhanden sein muss
 data class Tutorial(
-    val id: String,
+    val id: Int,
     val title: String,
     val steps: List<TutorialStep>
 )
@@ -12,7 +12,7 @@ data class Tutorial(
 //just an example for loading
 val allTutorials = listOf(
     Tutorial(
-        id = "1",
+        id = 1,
         title = "beispiel1",
         steps = listOf(
             TutorialStep(
@@ -28,7 +28,7 @@ val allTutorials = listOf(
         )
     ),
     Tutorial(
-        id = "2",
+        id = 2,
         title = "Beispiel 2",
         steps = listOf(
             TutorialStep(
