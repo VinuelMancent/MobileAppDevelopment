@@ -21,7 +21,7 @@ interface WebService {
 
 
     companion object {
-        const val BASE_URL = "http://10.0.2.2:80/mongo/";
+        const val BASE_URL = "http://appservice-mongodb.herokuapp.com/mongo/";
     }
 }
 

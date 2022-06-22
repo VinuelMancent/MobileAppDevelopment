@@ -39,12 +39,12 @@ private var counter: Int = 0
 //SCHÖN MACHEN
 @Composable
 fun Create(){
-    Column {
+    Column() {
         TutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
-        ShowExistingSteps() //evtl image hinzufügen
-        // Divider(color = Color.Blue, thickness = 1.dp)
-
+        ShowExistingSteps() //übersicht machen, id, content und evtl image
+        //Divider(color = Color.Blue, thickness = 1.dp)
+        AddStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
     }
 }
 
