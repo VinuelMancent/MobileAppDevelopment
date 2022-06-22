@@ -10,17 +10,17 @@ sealed class BottomNavigationItem {
     object Start: BottomNavigationItem(){
         override val routeName = "start"
         override val title = R.string.startscreen_navigation
-        override val icon = R.drawable.ic_shopping_cart_checkout_white_24dp //platzhalter
+        override val icon = R.drawable.ic_baseline_home_24 //platzhalter
     }
     object CreateTutorial : BottomNavigationItem(){
         override val routeName = "create"
         override val title = R.string.create_tutorial_navigation
-        override val icon = R.drawable.ic_restaurant_white_24dp
+        override val icon = R.drawable.ic_baseline_note_add_24
     }
 
     object OpenTutorial : BottomNavigationItem(){
         override val routeName = "open"
         override val title = R.string.open_tutorial_navigation
-        override val icon = R.drawable.circle
+        override val icon = R.drawable.ic_baseline_search_24
     }
 }
