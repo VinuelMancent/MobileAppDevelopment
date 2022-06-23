@@ -1,18 +1,20 @@
 package com.tutorialapp.feature.open
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tutorialapp.domain.Tutorial
-import com.tutorialapp.domain.TutorialStep
 import com.tutorialapp.domain.TutorialToJson
 
 var tutorials = loadTutorialsFromJson(TutorialToJson())
@@ -21,17 +23,32 @@ var tutorials = loadTutorialsFromJson(TutorialToJson())
 @Composable
 fun Open(){
     Column{
-        showTutorials()
+        ShowTutorials()
     }
 
 }
 @Composable
-fun showTutorials(){
+fun ShowTutorials(){
     //für jeden bereits vorhandenen schritt
     LazyColumn()
     {
         itemsIndexed(tutorials) {
-                _, item ->  Text(item.title)
+                _, item -> Box(modifier = Modifier
+                .padding(3.dp)
+                .width(380.dp)
+                .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+                .wrapContentHeight(align = Alignment.CenterVertically))
+                {
+                Text(text = (item.id.toString()),
+                    Modifier
+                        .padding(vertical = 3.dp)
+                        .padding(horizontal = 5.dp), textDecoration = TextDecoration.Underline)
+                Text(item.title,
+                    Modifier
+                        .padding(top = 25.dp)
+                        .padding(horizontal = 5.dp)
+                        .padding(bottom = 5.dp))
+            }
         }
     }
 }
@@ -39,6 +56,5 @@ fun loadTutorialsFromJson(jsonString: String): MutableList<Tutorial>{
     val gson = Gson()
     val ListTutorialType = object : TypeToken<List<Tutorial>>() {}.type
     var tutorials: MutableList<Tutorial> = gson.fromJson(jsonString, ListTutorialType)
-    //gson.fromJson(jsonString, Tutorial::class.java)
     return tutorials
 }

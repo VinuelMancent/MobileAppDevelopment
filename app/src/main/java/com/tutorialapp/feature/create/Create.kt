@@ -1,9 +1,11 @@
 package com.tutorialapp.feature.create
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -63,6 +65,16 @@ fun TutorialNameTextField(){
             .width(400.dp)
     )
 }
+
+/*
+@Composable
+fun showExistingSteps(){
+    //für jeden bereits vorhandenen schritt
+    steps.forEach{
+        Text(it.id.toString())
+        Text(it.content)
+    }
+}*/
 
 @Composable
 fun ShowExistingSteps(){
