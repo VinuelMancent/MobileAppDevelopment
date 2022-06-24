@@ -15,7 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.tutorialapp.data.database.Tutorial
 import com.tutorialapp.domain.TutorialStep
+import kotlin.random.Random
 
 
 /*
@@ -39,6 +41,8 @@ val step3 = TutorialStep(
 //private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
 private var steps:MutableList<TutorialStep> = mutableStateListOf()
 private var counter: Int = 0
+private var title: String = ""
+private var titleTextField: Unit = Unit
 
 //SCHÖN MACHEN
 @Composable
@@ -55,7 +59,7 @@ fun Create(){
 @Composable
 fun TutorialNameTextField(){
     var value by remember { mutableStateOf(TextFieldValue("")) }
-    OutlinedTextField(
+    titleTextField = OutlinedTextField(
         value = value,
         onValueChange = { newText ->
             value = newText
@@ -66,6 +70,7 @@ fun TutorialNameTextField(){
             .padding(8.dp)
             .width(400.dp)
     )
+    title = value.toString()
 }
 
 /*
@@ -106,6 +111,7 @@ fun ShowExistingSteps(){
             }
         }
         item { AddStep() }
+        item{ FinishCreatingTutorial()}
     }
 }
 
@@ -138,7 +144,38 @@ fun AddStep(){
         }, Modifier.padding(start = 8.dp)
     ){Text("Add Step")}
 }
+@Composable
+fun FinishCreatingTutorial(){
+    Button(
+        onClick = {
+            var tutorial: Tutorial = Tutorial(
+                id = generateID(),
+                steps = mutableListToList(steps),
+                title = title,
+            )
+            //if(titleTextField is TextFieldKt)
+            steps.clear()
+        }, Modifier.padding(start = 8.dp)
+    ){Text("Finish Tutorial")}
+}
 
+private fun generateID() : Int{
+    return Random.nextInt(10000,99999)
+}
+
+private fun mutableListToList(mutableList: MutableList<TutorialStep>): List<com.tutorialapp.data.database.TutorialStep>{
+    var result: MutableList<com.tutorialapp.data.database.TutorialStep> = mutableListOf<com.tutorialapp.data.database.TutorialStep>()
+
+    for (element in mutableList) {
+       result.add(
+           com.tutorialapp.data.database.TutorialStep(
+               id = element.id,
+               content = element.content
+           )
+       )
+    }
+    return result
+}
 /*
 fun TakePicture() {
     val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(...)).build()
