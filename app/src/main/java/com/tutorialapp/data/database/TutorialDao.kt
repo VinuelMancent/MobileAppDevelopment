@@ -8,8 +8,8 @@ import androidx.room.Query
 interface TutorialDao {
 
     @Insert
-    suspend fun insert(tutorial: TutorialDb)
+    suspend fun insert(tutorial: Tutorial)
 
     @Query("SELECT * FROM Tutorial")
-    suspend fun getAll(): List<TutorialDb>
+    suspend fun getAll(): List<Tutorial>
 }
