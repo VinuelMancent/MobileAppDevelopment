@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.tutorialapp.domain.TutorialStep
 
 
+/*
 //test to simply try to print steps
 val step1 = TutorialStep(
     id = 1,
@@ -33,9 +34,10 @@ val step3 = TutorialStep(
 )
 
 //
+*/
 
-
-private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
+//private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
+private var steps:MutableList<TutorialStep> = mutableStateListOf()
 private var counter: Int = 0
 
 //SCHÖN MACHEN
@@ -46,7 +48,7 @@ fun Create(){
         //Divider(color = Color.Blue, thickness = 1.dp)
         ShowExistingSteps() //übersicht machen, id, content und evtl image
         //Divider(color = Color.Blue, thickness = 1.dp)
-        AddStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
+        //AddStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
     }
 }
 

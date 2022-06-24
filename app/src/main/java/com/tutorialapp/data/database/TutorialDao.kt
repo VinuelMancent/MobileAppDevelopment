@@ -11,5 +11,5 @@ interface TutorialDao {
     suspend fun insert(tutorial: Tutorial)
 
     @Query("SELECT * FROM Tutorial")
-    suspend fun getAll(): List<Tutorial>
+    suspend fun getAll(): MutableList<Tutorial>
 }

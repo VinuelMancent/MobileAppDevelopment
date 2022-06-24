@@ -29,7 +29,6 @@ fun Open(){
 }
 @Composable
 fun ShowTutorials(){
-    //für jeden bereits vorhandenen schritt
     LazyColumn()
     {
         itemsIndexed(tutorials) {
