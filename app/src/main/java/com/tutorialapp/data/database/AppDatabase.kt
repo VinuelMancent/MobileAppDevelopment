@@ -9,3 +9,6 @@ import androidx.room.RoomDatabase
         TutorialDb::class,
     ],
 )
+abstract class AppDatabase:RoomDatabase(){
+    abstract fun tutorialDao(): TutorialDao
+}

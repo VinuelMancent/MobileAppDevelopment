@@ -10,6 +10,6 @@ interface TutorialDao {
     @Insert
     suspend fun insert(tutorial: TutorialDb)
 
-    @Query("SELECT * FROM tutorial")
+    @Query("SELECT * FROM Tutorial")
     suspend fun getAll(): List<TutorialDb>
 }
