@@ -8,6 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,16 +57,21 @@ fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Un
 
 @Composable
 fun uploadButtonToDatabase(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> kotlin.Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
+    val buttonText = remember {mutableStateOf("Upload")}
+    val buttonClickable = remember {mutableStateOf(true)}
     Button(onClick = {
         onUploadButtonClicked(databaseToDomainTutorial(tutorial))
         tutorial.uploaded = true
+        buttonText.value = "Uploaded"
         updateTutorial(tutorial)
+        buttonClickable.value = false
     }, Modifier
         .padding(top = 50.dp)
         .padding(horizontal = 5.dp)
         .padding(bottom = 5.dp)
+    , enabled = buttonClickable.value
     ) {
-        Text("Upload")
+        Text(buttonText.value)
     }
 }
 
