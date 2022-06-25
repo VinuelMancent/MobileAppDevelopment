@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.tutorialapp.data.database.Tutorial
 import com.tutorialapp.domain.TutorialStep
 import java.util.*
+import kotlin.math.abs
 
 
 /*
@@ -164,7 +165,7 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
 
 private fun generateID() : Int{
     val uuid = UUID.randomUUID()
-    return uuid.hashCode()
+    return abs(uuid.hashCode())
     //return Random.nextInt(10000,99999)
 }
 

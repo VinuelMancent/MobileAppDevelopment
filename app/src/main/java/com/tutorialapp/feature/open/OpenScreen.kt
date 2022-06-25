@@ -14,8 +14,8 @@ import com.tutorialapp.data.database.Tutorial
 @Composable
 fun OpenScreen(viewModel: OpenScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
     val tutorials by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
-    OpenScreenUI(tutorials)
-    Open()
+    //OpenScreenUI(tutorials)
+    Open(tutorials)
 }
 @Composable
 private fun OpenScreenUI(tutorials: List<Tutorial>){

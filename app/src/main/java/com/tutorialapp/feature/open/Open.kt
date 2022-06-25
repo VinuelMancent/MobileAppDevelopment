@@ -15,20 +15,19 @@ import androidx.compose.ui.unit.dp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tutorialapp.domain.Tutorial
-import com.tutorialapp.domain.TutorialToJson
 
-var tutorials = loadTutorialsFromJson(TutorialToJson())
+//var tutorials = mutableListOf<com.tutorialapp.data.database.Tutorial>()
 
 //open should show the name of the tutorial
 @Composable
-fun Open(){
+fun Open(tutorials: List<com.tutorialapp.data.database.Tutorial>){
     Column{
-        ShowTutorials()
+        ShowTutorials(tutorials)
     }
 
 }
 @Composable
-fun ShowTutorials(){
+fun ShowTutorials(tutorials: List<com.tutorialapp.data.database.Tutorial>){
     LazyColumn()
     {
         itemsIndexed(tutorials) {
