@@ -10,4 +10,5 @@ class TutorialRepository(
     private val dao: TutorialDao
 ) {
     suspend fun getAllTutorials(): List<Tutorial> = dao.getAll()
+    suspend fun insert(tutorial: Tutorial) = dao.insert(tutorial)
 }

@@ -46,11 +46,11 @@ private var titleTextField: Unit = Unit
 
 //SCHÖN MACHEN
 @Composable
-fun Create(){
+fun Create(addTutorial: (Tutorial) -> Unit){
     Column() {
         TutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
-        ShowExistingSteps() //übersicht machen, id, content und evtl image
+        ShowExistingSteps(addTutorial) //übersicht machen, id, content und evtl image
         //Divider(color = Color.Blue, thickness = 1.dp)
         //AddStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
     }
@@ -84,7 +84,7 @@ fun showExistingSteps(){
 }*/
 
 @Composable
-fun ShowExistingSteps(){
+fun ShowExistingSteps(AddTutorial: (Tutorial) -> Unit){
     //für jeden bereits vorhandenen schritt
     LazyColumn (
         Modifier
@@ -111,7 +111,7 @@ fun ShowExistingSteps(){
             }
         }
         item { AddStep() }
-        item{ FinishCreatingTutorial()}
+        item{ FinishCreatingTutorial(AddTutorial)}
     }
 }
 
@@ -145,7 +145,7 @@ fun AddStep(){
     ){Text("Add Step")}
 }
 @Composable
-fun FinishCreatingTutorial(){
+fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
     Button(
         onClick = {
             var tutorial: Tutorial = Tutorial(
@@ -153,8 +153,10 @@ fun FinishCreatingTutorial(){
                 steps = mutableListToList(steps),
                 title = title,
             )
+            AddTutorial(tutorial)
             //if(titleTextField is TextFieldKt)
             steps.clear()
+            counter = 0
         }, Modifier.padding(start = 8.dp)
     ){Text("Finish Tutorial")}
 }

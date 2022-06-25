@@ -1,24 +1,15 @@
 package com.tutorialapp.feature.create
 
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.google.gson.JsonSerializer
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.tutorialapp.data.network.WebService
-import com.tutorialapp.domain.CreateTutorialUseCase
-import com.tutorialapp.domain.Tutorial
+import com.tutorialapp.domain.SaveLocalTutorialUseCase
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CreateScreenVewModel : ViewModel() {
     //funktion onCreateClicked --> wenn der user den button drückt
-
-    fun test(tutorial: Tutorial){
+    //upload to online db
+    /*
+    fun SaveTutorialInOnlineDB(tutorial: Tutorial){
         val saveTutorialOnClick: () -> Unit = {
         }
 
@@ -39,5 +30,12 @@ class CreateScreenVewModel : ViewModel() {
                 System.out.println(result.headers().toString())
                 System.out.println(result.body().toString())
             }
+    }
+    */
+    //upload to local db
+    fun SaveTutorialInLocalDB(tutorial: com.tutorialapp.data.database.Tutorial) {
+        viewModelScope.launch{
+            SaveLocalTutorialUseCase()(tutorial)
+        }
     }
 }
