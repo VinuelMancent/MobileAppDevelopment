@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tutorialapp.data.database.Tutorial
 import com.tutorialapp.data.network.WebService
 import com.tutorialapp.domain.LoadLocalTutorialsUseCase
+import com.tutorialapp.domain.UpdateLocalTutorialUseCase
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +30,12 @@ class OpenScreenViewModel : ViewModel(){
                 .create(WebService::class.java)
 
             webService.createTutorial(tutorial)
+        }
+    }
+
+    fun updateLocalTutorialToUploaded(tutorial: Tutorial){
+        viewModelScope.launch {
+            UpdateLocalTutorialUseCase()(tutorial)
         }
     }
 }

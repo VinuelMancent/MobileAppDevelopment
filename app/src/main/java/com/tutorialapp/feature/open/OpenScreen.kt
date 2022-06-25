@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun OpenScreen(viewModel: OpenScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
     val tutorials by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
     //OpenScreenUI(tutorials)
-    Open(viewModel::uploadToDB, tutorials)
+    Open(viewModel::updateLocalTutorialToUploaded,viewModel::uploadToDB, tutorials)
 }
 /*
 @Composable

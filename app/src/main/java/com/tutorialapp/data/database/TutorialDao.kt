@@ -3,6 +3,7 @@ package com.tutorialapp.data.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface TutorialDao {
@@ -12,4 +13,7 @@ interface TutorialDao {
 
     @Query("SELECT * FROM Tutorial")
     suspend fun getAll(): MutableList<Tutorial>
+
+    @Update
+    suspend fun updateTutorial(tutorial: Tutorial)
 }

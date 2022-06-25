@@ -11,4 +11,5 @@ class TutorialRepository(
 ) {
     suspend fun getAllTutorials(): List<Tutorial> = dao.getAll()
     suspend fun insert(tutorial: Tutorial) = dao.insert(tutorial)
+    suspend fun updateTutorial(tutorial: Tutorial) = dao.updateTutorial(tutorial)
 }

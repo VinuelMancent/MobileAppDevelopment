@@ -17,18 +17,15 @@ import com.tutorialapp.domain.Tutorial
 import com.tutorialapp.domain.TutorialStep
 import kotlin.reflect.KFunction1
 
-//var tutorials = mutableListOf<com.tutorialapp.data.database.Tutorial>()
-
-//open should show the name of the tutorial
 @Composable
-fun Open(onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorials: List<com.tutorialapp.data.database.Tutorial>){
+fun Open(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit, onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorials: List<com.tutorialapp.data.database.Tutorial>){
     Column{
-        ShowTutorials(onUploadButtonClicked,tutorials)
+        ShowTutorials(updateTutorial,onUploadButtonClicked,tutorials)
     }
 
 }
 @Composable
-fun ShowTutorials(onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>){
+fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>){
     LazyColumn()
     {
         itemsIndexed(tutorials) {
@@ -48,7 +45,7 @@ fun ShowTutorials(onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: L
                         .padding(horizontal = 5.dp)
                         .padding(bottom = 5.dp))
                 if(!item.uploaded){
-                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = item)
+                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = item, updateTutorial = updateTutorial)
                 }
             }
 
@@ -57,9 +54,11 @@ fun ShowTutorials(onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: L
 }
 
 @Composable
-fun uploadButtonToDatabase(onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
+fun uploadButtonToDatabase(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> kotlin.Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
     Button(onClick = {
         onUploadButtonClicked(databaseToDomainTutorial(tutorial))
+        tutorial.uploaded = true
+        updateTutorial(tutorial)
     }, Modifier
         .padding(top = 50.dp)
         .padding(horizontal = 5.dp)
