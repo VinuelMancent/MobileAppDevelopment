@@ -63,6 +63,7 @@ fun TutorialNameTextField(){
         value = value,
         onValueChange = { newText ->
             value = newText
+            title = newText.text
         },
         label = { Text(text = "Name of the tutorial")},
         singleLine = true,
@@ -70,7 +71,7 @@ fun TutorialNameTextField(){
             .padding(8.dp)
             .width(400.dp)
     )
-    title = value.toString()
+    //title = titleTextField.toString()
 }
 
 /*
@@ -151,7 +152,7 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
             var tutorial: Tutorial = Tutorial(
                 id = generateID(),
                 steps = mutableListToList(steps),
-                title = title,
+                title = title.substringAfter("(text=\"")
             )
             AddTutorial(tutorial)
             //if(titleTextField is TextFieldKt)
