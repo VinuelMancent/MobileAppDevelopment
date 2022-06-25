@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.tutorialapp.data.database.Tutorial
 import com.tutorialapp.domain.TutorialStep
-import kotlin.random.Random
+import java.util.*
 
 
 /*
@@ -162,7 +162,9 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
 }
 
 private fun generateID() : Int{
-    return Random.nextInt(10000,99999)
+    val uuid = UUID.randomUUID()
+    return uuid.hashCode()
+    //return Random.nextInt(10000,99999)
 }
 
 private fun mutableListToList(mutableList: MutableList<TutorialStep>): List<com.tutorialapp.data.database.TutorialStep>{
