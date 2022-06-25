@@ -60,7 +60,11 @@ fun ShowTutorials(onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: L
 fun uploadButtonToDatabase(onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
     Button(onClick = {
         onUploadButtonClicked(databaseToDomainTutorial(tutorial))
-    }) {
+    }, Modifier
+        .padding(top = 50.dp)
+        .padding(horizontal = 5.dp)
+        .padding(bottom = 5.dp)
+    ) {
         Text("Upload")
     }
 }
