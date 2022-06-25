@@ -153,7 +153,8 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
             var tutorial: Tutorial = Tutorial(
                 id = generateID(),
                 steps = mutableListToList(steps),
-                title = title.substringAfter("(text=\"")
+                title = title.substringAfter("(text=\""),
+                uploaded = false,
             )
             AddTutorial(tutorial)
             //if(titleTextField is TextFieldKt)

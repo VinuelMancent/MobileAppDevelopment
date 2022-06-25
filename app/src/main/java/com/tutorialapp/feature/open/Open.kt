@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,30 +13,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.tutorialapp.domain.Tutorial
+import com.tutorialapp.domain.TutorialStep
+import kotlin.reflect.KFunction1
 
 //var tutorials = mutableListOf<com.tutorialapp.data.database.Tutorial>()
 
 //open should show the name of the tutorial
 @Composable
-fun Open(tutorials: List<com.tutorialapp.data.database.Tutorial>){
+fun Open(onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorials: List<com.tutorialapp.data.database.Tutorial>){
     Column{
-        ShowTutorials(tutorials)
+        ShowTutorials(onUploadButtonClicked,tutorials)
     }
 
 }
 @Composable
-fun ShowTutorials(tutorials: List<com.tutorialapp.data.database.Tutorial>){
+fun ShowTutorials(onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>){
     LazyColumn()
     {
         itemsIndexed(tutorials) {
                 _, item -> Box(modifier = Modifier
-                .padding(3.dp)
-                .width(380.dp)
-                .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
-                .wrapContentHeight(align = Alignment.CenterVertically))
+            .padding(3.dp)
+            .width(380.dp)
+            .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
+            .wrapContentHeight(align = Alignment.CenterVertically))
                 {
                 Text(text = (item.id.toString()),
                     Modifier
@@ -46,13 +47,42 @@ fun ShowTutorials(tutorials: List<com.tutorialapp.data.database.Tutorial>){
                         .padding(top = 25.dp)
                         .padding(horizontal = 5.dp)
                         .padding(bottom = 5.dp))
+                if(!item.uploaded){
+                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = item)
+                }
             }
+
         }
     }
 }
-fun loadTutorialsFromJson(jsonString: String): MutableList<Tutorial>{
-    val gson = Gson()
-    val ListTutorialType = object : TypeToken<List<Tutorial>>() {}.type
-    var tutorials: MutableList<Tutorial> = gson.fromJson(jsonString, ListTutorialType)
-    return tutorials
+
+@Composable
+fun uploadButtonToDatabase(onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
+    Button(onClick = {
+        onUploadButtonClicked(databaseToDomainTutorial(tutorial))
+    }) {
+        Text("Upload")
+    }
+}
+
+private fun databaseToDomainTutorial(tutorial: com.tutorialapp.data.database.Tutorial): Tutorial{
+    var result: Tutorial = Tutorial(
+        id = tutorial.id,
+        title = tutorial.title,
+        steps =  databaseStepsToDomainsteps(tutorial.steps)
+    )
+    return result
+}
+
+private fun databaseStepsToDomainsteps(steps: List<com.tutorialapp.data.database.TutorialStep>) : List<TutorialStep>{
+    var result = mutableListOf<TutorialStep>()
+    for (element in steps) {
+        result.add(
+            TutorialStep(
+                id = element.id,
+                content = element.content
+            )
+        )
+    }
+    return result
 }

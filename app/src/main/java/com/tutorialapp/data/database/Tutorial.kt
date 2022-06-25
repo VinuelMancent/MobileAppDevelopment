@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class Tutorial (
     @PrimaryKey val id: Int,
     @ColumnInfo(name="title") val title: String,
-    @ColumnInfo(name="steps") val steps: List<TutorialStep>
+    @ColumnInfo(name="steps") val steps: List<TutorialStep>,
+    @ColumnInfo(name="uploaded") val uploaded: Boolean,
 )
