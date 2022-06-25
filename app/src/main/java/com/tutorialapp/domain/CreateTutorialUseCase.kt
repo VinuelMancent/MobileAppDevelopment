@@ -8,6 +8,6 @@ class CreateTutorialUseCase(
     private val webService: WebService,
 ){
     suspend operator fun invoke(tutorial: Tutorial) = withContext(Dispatchers.Default){
-        webService.createTutorial(tutorial)
+        var result = webService.createTutorial(tutorial)
     }
 }
