@@ -1,16 +1,14 @@
 package com.tutorialapp.feature.start
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.tutorialapp.data.network.WebService
-import com.tutorialapp.domain.CreateTutorialUseCase
+import com.tutorialapp.domain.SaveLocalTutorialUseCase
 import com.tutorialapp.domain.Tutorial
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import androidx.lifecycle.ViewModel
 
 
 class StartScreenViewModel : ViewModel(){
@@ -42,6 +40,36 @@ class StartScreenViewModel : ViewModel(){
         }
         System.out.println(tutorials)
         return tutorials
+    }
+
+    fun downloadOneTutorial(id: Int, tutorial: Tutorial) {
+        viewModelScope.launch{
+            if(tutorial.id == id){
+                SaveLocalTutorialUseCase()(domainToDatabaseTutorial(tutorial))
+            }
+        }
+    }
+
+    private fun domainToDatabaseTutorial(tutorial: Tutorial): com.tutorialapp.data.database.Tutorial{
+        var result: com.tutorialapp.data.database.Tutorial = com.tutorialapp.data.database.Tutorial(
+            id = tutorial.id,
+            title = tutorial.title,
+            steps =  domainStepsToDatabaseSteps(tutorial.steps),
+            uploaded = true,
+        )
+        return result
+    }
+    private fun domainStepsToDatabaseSteps(steps: List<com.tutorialapp.domain.TutorialStep>) :List<com.tutorialapp.data.database.TutorialStep>{
+        var result = mutableListOf<com.tutorialapp.data.database.TutorialStep>()
+        for (element in steps) {
+            result.add(
+                com.tutorialapp.data.database.TutorialStep(
+                    id = element.id,
+                    content = element.content
+                )
+            )
+        }
+        return result
     }
 
     //zweite funktion mit livedata
