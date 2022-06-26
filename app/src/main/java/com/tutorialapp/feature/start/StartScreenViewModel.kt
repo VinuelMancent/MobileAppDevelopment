@@ -2,8 +2,10 @@ package com.tutorialapp.feature.start
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.tutorialapp.data.network.WebService
+import com.tutorialapp.domain.LoadLocalTutorialsUseCase
 import com.tutorialapp.domain.SaveLocalTutorialUseCase
 import com.tutorialapp.domain.Tutorial
 import kotlinx.coroutines.launch
@@ -41,6 +43,12 @@ class StartScreenViewModel : ViewModel(){
         System.out.println(tutorials)
         return tutorials
     }
+
+    fun getLocalTutorials()= liveData{
+        val result = LoadLocalTutorialsUseCase()()
+        emit(result)
+    }
+
 
     fun downloadOneTutorial(id: Int, tutorial: Tutorial) {
         viewModelScope.launch{
