@@ -45,7 +45,12 @@ class StartScreenViewModel : ViewModel(){
     fun downloadOneTutorial(id: Int, tutorial: Tutorial) {
         viewModelScope.launch{
             if(tutorial.id == id){
-                SaveLocalTutorialUseCase()(domainToDatabaseTutorial(tutorial))
+                try{
+                    SaveLocalTutorialUseCase()(domainToDatabaseTutorial(tutorial))
+                }catch(e: Exception){
+
+                }
+
             }
         }
     }
