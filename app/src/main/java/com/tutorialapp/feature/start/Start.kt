@@ -15,7 +15,7 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
 
     Column(){
         Button(onClick = onLoadButtonClicked) {
-
+            Text("Load Tutorials from the Web")
         }
 
 
@@ -29,7 +29,7 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
                                   onDownloadButtonClicked(item.id, item)
                         },
                     ){
-
+                        Text("Download")
                     }
                 }
 
