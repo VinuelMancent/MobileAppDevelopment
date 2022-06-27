@@ -41,7 +41,7 @@ val step3 = TutorialStep(
 
 //private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
 private var steps:MutableList<TutorialStep> = mutableStateListOf()
-private var counter: Int = 0
+private var counter: Int = 1
 private var title: String = ""
 private var titleTextField: Unit = Unit
 
@@ -51,9 +51,9 @@ fun Create(addTutorial: (Tutorial) -> Unit){
     Column() {
         TutorialNameTextField() //evtl enter taste deaktivieren
         //Divider(color = Color.Blue, thickness = 1.dp)
-        ShowExistingSteps(addTutorial) //übersicht machen, id, content und evtl image
+        ShowExistingSteps(addTutorial) //evtl image
         //Divider(color = Color.Blue, thickness = 1.dp)
-        //AddStep() //textfeld anpassen (größe, form?), inhalt löschen nach hinzufügen, möglichkeit für bilder(?)
+        //AddStep() //möglichkeit für bilder(?)
     }
 }
 
@@ -158,6 +158,8 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
             )
             AddTutorial(tutorial)
             //if(titleTextField is TextFieldKt)
+            titleTextField =
+            //clear name
             steps.clear()
             counter = 0
         }, Modifier.padding(start = 8.dp)
