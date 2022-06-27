@@ -37,7 +37,7 @@ fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Un
     LazyColumn()
     {
         itemsIndexed(tutorials) {
-                _, item -> ExpandableCard(title = item.title, description = item.steps.toString())
+                _, item -> ExpandableCard(title = item.title, steps = item.steps)
 
 
             /*Box(modifier = Modifier
@@ -94,7 +94,7 @@ fun ShowTutorialSteps(steps : List<com.tutorialapp.data.database.TutorialStep>){
 @Composable
 fun ExpandableCard(
     title: String,
-    description: String,
+    steps: List<com.tutorialapp.data.database.TutorialStep>,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -145,12 +145,27 @@ fun ExpandableCard(
                 }
             }
             if (expandedState) {
+                for(item in steps){
+                    Column(Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    ){
+                        Text(
+                            text = item.content,
+                            fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                            fontWeight = FontWeight.Normal,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+
+                /*
                 Text(
                     text = description,
                     fontSize = MaterialTheme.typography.subtitle1.fontSize,
                     fontWeight = FontWeight.Normal,
                     overflow = TextOverflow.Ellipsis
-                )
+                )*/
             }
         }
     }
