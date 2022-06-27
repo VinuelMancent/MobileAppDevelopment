@@ -1,19 +1,25 @@
 package com.tutorialapp.feature.open
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import android.util.Log
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tutorialapp.domain.Tutorial
 import com.tutorialapp.domain.TutorialStep
@@ -21,21 +27,40 @@ import kotlin.reflect.KFunction1
 
 @Composable
 fun Open(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit, onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorials: List<com.tutorialapp.data.database.Tutorial>){
+    var tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>> = remember {mutableStateOf(initOpenMap(tutorials))}
     Column{
-        ShowTutorials(updateTutorial,onUploadButtonClicked,tutorials)
+        ShowTutorials(updateTutorial,onUploadButtonClicked,tutorials, tutorialOpen)
     }
-
 }
 @Composable
-fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>){
+fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>, tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>>){
     LazyColumn()
     {
         itemsIndexed(tutorials) {
-                _, item -> Box(modifier = Modifier
+                _, item -> ExpandableCard(title = item.title, description = item.steps.toString())
+
+
+            /*Box(modifier = Modifier
             .padding(3.dp)
             .width(380.dp)
             .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
-            .wrapContentHeight(align = Alignment.CenterVertically))
+            .wrapContentHeight(align = Alignment.CenterVertically)
+            .clickable(enabled = true) {
+                //if clicked --> change value of map
+                if (tutorialOpen.value[item.id] == null) {
+                    tutorialOpen.value.put(item.id, mutableStateOf(false))
+                }
+                if (tutorialOpen.value[item.id]?.value == null) {
+                    tutorialOpen.value[item.id]?.value = false
+                }
+                tutorialOpen.value[item.id]?.value = !tutorialOpen.value[item.id]?.value!!
+                //change size depending on the value of the map
+                if (tutorialOpen.value[item.id]?.value == true) {
+                    //show Steps
+                    //ShowTutorialSteps(steps = item.steps)
+                }
+            }
+        )
                 {
                 Text(text = (item.id.toString()),
                     Modifier
@@ -49,14 +74,89 @@ fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Un
                 if(!item.uploaded){
                     uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = item, updateTutorial = updateTutorial)
                 }
+            }*/
+            if (tutorialOpen.value[item.id]?.value == true) {
+                ShowTutorialSteps(steps = item.steps)
             }
-
         }
     }
 }
 
 @Composable
-fun uploadButtonToDatabase(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> kotlin.Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial: com.tutorialapp.data.database.Tutorial){
+fun ShowTutorialSteps(steps : List<com.tutorialapp.data.database.TutorialStep>){
+    for(step in steps){
+        Text(step.content)
+    }
+    Log.e("", "am showing steps")
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ExpandableCard(
+    title: String,
+    description: String,
+) {
+    var expandedState by remember { mutableStateOf(false) }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
+    )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            ),
+        onClick = {
+            expandedState = !expandedState
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier
+                        .weight(6f),
+                    text = title,
+                    fontSize = MaterialTheme.typography.h6.fontSize,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                IconButton(
+                    modifier = Modifier
+                        .weight(1f)
+                        .rotate(rotationState),
+                    onClick = {
+                        expandedState = !expandedState
+                    }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Drop-Down Arrow"
+                    )
+                }
+            }
+            if (expandedState) {
+                Text(
+                    text = description,
+                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                    fontWeight = FontWeight.Normal,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}
+@Composable
+fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutorial) -> kotlin.Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial : com.tutorialapp.data.database.Tutorial){
     val buttonText = remember {mutableStateOf("Upload")}
     val buttonClickable = remember {mutableStateOf(true)}
     Button(onClick = {
@@ -95,4 +195,12 @@ private fun databaseStepsToDomainsteps(steps: List<com.tutorialapp.data.database
         )
     }
     return result
+}
+
+private fun initOpenMap(tutorials: List<com.tutorialapp.data.database.Tutorial>) : MutableMap<Int, MutableState<Boolean>>{
+    var tutorialOpen : MutableMap<Int, MutableState<Boolean>> =mutableMapOf<Int, MutableState<Boolean>>()
+    for(tutorial in tutorials){
+        tutorialOpen[tutorial.id]?.value = false
+    }
+    return tutorialOpen
 }
