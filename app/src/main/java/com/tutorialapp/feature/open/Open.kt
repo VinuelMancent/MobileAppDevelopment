@@ -5,12 +5,11 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -18,7 +17,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tutorialapp.domain.Tutorial
@@ -31,13 +32,14 @@ fun Open(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit, onUpl
     Column{
         ShowTutorials(updateTutorial,onUploadButtonClicked,tutorials, tutorialOpen)
     }
+
 }
 @Composable
 fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>, tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>>){
     LazyColumn()
     {
         itemsIndexed(tutorials) {
-                _, item -> ExpandableCard(title = item.title, steps = item.steps)
+                _, item -> ExpandableCard(title = item.title, steps = item.steps, tutorial = item, updateTutorial, onUploadButtonClicked)
 
 
             /*Box(modifier = Modifier
@@ -78,6 +80,7 @@ fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Un
             if (tutorialOpen.value[item.id]?.value == true) {
                 ShowTutorialSteps(steps = item.steps)
             }
+
         }
     }
 }
@@ -95,6 +98,9 @@ fun ShowTutorialSteps(steps : List<com.tutorialapp.data.database.TutorialStep>){
 fun ExpandableCard(
     title: String,
     steps: List<com.tutorialapp.data.database.TutorialStep>,
+    tutorial: com.tutorialapp.data.database.Tutorial,
+    updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,
+    onUploadButtonClicked: KFunction1<Tutorial, Unit>,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -131,6 +137,9 @@ fun ExpandableCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+                if(!tutorial.uploaded){
+                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = tutorial, updateTutorial = updateTutorial)
+                }
                 IconButton(
                     modifier = Modifier
                         .weight(1f)
@@ -146,9 +155,10 @@ fun ExpandableCard(
             }
             if (expandedState) {
                 for(item in steps){
-                    Column(Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
                     ){
                         Text(
                             text = item.content,
@@ -181,9 +191,7 @@ fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutor
         updateTutorial(tutorial)
         buttonClickable.value = false
     }, Modifier
-        .padding(top = 50.dp)
         .padding(horizontal = 5.dp)
-        .padding(bottom = 5.dp)
     , enabled = buttonClickable.value
     ) {
         Text(buttonText.value)
