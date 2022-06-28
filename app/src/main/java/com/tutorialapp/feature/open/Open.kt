@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tutorialapp.domain.Tutorial
@@ -28,12 +27,12 @@ import kotlin.reflect.KFunction1
 
 @Composable
 fun Open(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit, onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorials: List<com.tutorialapp.data.database.Tutorial>){
-    var tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>> = remember {mutableStateOf(initOpenMap(tutorials))}
+    val tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>> = remember {mutableStateOf(initOpenMap(tutorials))}
     Column{
         ShowTutorials(updateTutorial,onUploadButtonClicked,tutorials, tutorialOpen)
     }
-
 }
+
 @Composable
 fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>, tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>>){
     LazyColumn()
@@ -41,46 +40,9 @@ fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Un
         itemsIndexed(tutorials) {
                 _, item -> ExpandableCard(title = item.title, steps = item.steps, tutorial = item, updateTutorial, onUploadButtonClicked)
 
-
-            /*Box(modifier = Modifier
-            .padding(3.dp)
-            .width(380.dp)
-            .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
-            .wrapContentHeight(align = Alignment.CenterVertically)
-            .clickable(enabled = true) {
-                //if clicked --> change value of map
-                if (tutorialOpen.value[item.id] == null) {
-                    tutorialOpen.value.put(item.id, mutableStateOf(false))
-                }
-                if (tutorialOpen.value[item.id]?.value == null) {
-                    tutorialOpen.value[item.id]?.value = false
-                }
-                tutorialOpen.value[item.id]?.value = !tutorialOpen.value[item.id]?.value!!
-                //change size depending on the value of the map
-                if (tutorialOpen.value[item.id]?.value == true) {
-                    //show Steps
-                    //ShowTutorialSteps(steps = item.steps)
-                }
-            }
-        )
-                {
-                Text(text = (item.id.toString()),
-                    Modifier
-                        .padding(vertical = 3.dp)
-                        .padding(horizontal = 5.dp), textDecoration = TextDecoration.Underline)
-                Text(item.title,
-                    Modifier
-                        .padding(top = 25.dp)
-                        .padding(horizontal = 5.dp)
-                        .padding(bottom = 5.dp))
-                if(!item.uploaded){
-                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = item, updateTutorial = updateTutorial)
-                }
-            }*/
             if (tutorialOpen.value[item.id]?.value == true) {
                 ShowTutorialSteps(steps = item.steps)
             }
-
         }
     }
 }
@@ -110,6 +72,7 @@ fun ExpandableCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            //.border(2.dp, Color.LightGray, RoundedCornerShape(8.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -158,30 +121,30 @@ fun ExpandableCard(
                     Column(
                         Modifier
                             .fillMaxWidth()
-                            .padding(8.dp),
+                            .padding(3.dp),
                     ){
-                        Text(
-                            text = item.content,
-                            fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                            fontWeight = FontWeight.Normal,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                        Box(
+                            Modifier
+                                .border(2.dp, Color.LightGray, RoundedCornerShape(8.dp))
+                                .padding(vertical =  5.dp, horizontal = 8.dp)
+                                .fillMaxWidth(0.9F)
+                        ) {
+                            Text(
+                                text = item.content,
+                                fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                                fontWeight = FontWeight.Normal,
+                                overflow = TextOverflow.Ellipsis,
+                                )
+                        }
                     }
                 }
-
-                /*
-                Text(
-                    text = description,
-                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                    fontWeight = FontWeight.Normal,
-                    overflow = TextOverflow.Ellipsis
-                )*/
             }
         }
     }
 }
+
 @Composable
-fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutorial) -> kotlin.Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial : com.tutorialapp.data.database.Tutorial){
+fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial : com.tutorialapp.data.database.Tutorial){
     val buttonText = remember {mutableStateOf("Upload")}
     val buttonClickable = remember {mutableStateOf(true)}
     Button(onClick = {
@@ -199,7 +162,7 @@ fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutor
 }
 
 private fun databaseToDomainTutorial(tutorial: com.tutorialapp.data.database.Tutorial): Tutorial{
-    var result: Tutorial = Tutorial(
+    val result = Tutorial(
         id = tutorial.id,
         title = tutorial.title,
         steps =  databaseStepsToDomainsteps(tutorial.steps)
@@ -208,7 +171,7 @@ private fun databaseToDomainTutorial(tutorial: com.tutorialapp.data.database.Tut
 }
 
 private fun databaseStepsToDomainsteps(steps: List<com.tutorialapp.data.database.TutorialStep>) : List<TutorialStep>{
-    var result = mutableListOf<TutorialStep>()
+    val result = mutableListOf<TutorialStep>()
     for (element in steps) {
         result.add(
             TutorialStep(
@@ -221,7 +184,7 @@ private fun databaseStepsToDomainsteps(steps: List<com.tutorialapp.data.database
 }
 
 private fun initOpenMap(tutorials: List<com.tutorialapp.data.database.Tutorial>) : MutableMap<Int, MutableState<Boolean>>{
-    var tutorialOpen : MutableMap<Int, MutableState<Boolean>> =mutableMapOf<Int, MutableState<Boolean>>()
+    val tutorialOpen : MutableMap<Int, MutableState<Boolean>> =mutableMapOf<Int, MutableState<Boolean>>()
     for(tutorial in tutorials){
         tutorialOpen[tutorial.id]?.value = false
     }
