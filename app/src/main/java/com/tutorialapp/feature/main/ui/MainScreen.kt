@@ -3,6 +3,7 @@ package com.tutorialapp.feature.main.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +27,12 @@ fun MainScreen(){
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             TopAppBar(
-                title = {"Platzhalter"},
+                title = {
+                    if (currentRoute != null) {
+                        Text(text = currentRoute)
+                    }
+                },
+                navigationIcon = null
             )
         },
         bottomBar = {
