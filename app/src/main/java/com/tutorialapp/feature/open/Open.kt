@@ -35,13 +35,24 @@ fun Open(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit, onUpl
 
 @Composable
 fun ShowTutorials(updateTutorial: (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>,tutorials: List<com.tutorialapp.data.database.Tutorial>, tutorialOpen : MutableState<MutableMap<Int, MutableState<Boolean>>>){
-    LazyColumn()
-    {
-        itemsIndexed(tutorials) {
-                _, item -> ExpandableCard(title = item.title, steps = item.steps, tutorial = item, updateTutorial, onUploadButtonClicked)
+    if(tutorials.isEmpty()){
+        Text("You currently don't have any local Tutorials.")
+        Text("You can either search and download one from the web or create your own!")
+    }else {
+        LazyColumn()
+        {
+            itemsIndexed(tutorials) { _, item ->
+                ExpandableCard(
+                    title = item.title,
+                    steps = item.steps,
+                    tutorial = item,
+                    updateTutorial,
+                    onUploadButtonClicked
+                )
 
-            if (tutorialOpen.value[item.id]?.value == true) {
-                ShowTutorialSteps(steps = item.steps)
+                if (tutorialOpen.value[item.id]?.value == true) {
+                    ShowTutorialSteps(steps = item.steps)
+                }
             }
         }
     }
