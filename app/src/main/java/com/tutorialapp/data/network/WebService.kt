@@ -16,9 +16,6 @@ interface WebService {
     @GET("getAll")
     suspend fun getAllTutorials(): Response<MutableList<Tutorial>>
 
-    @POST("getOne")
-    suspend fun getOneTutorial(@Body id: Int): MutableState<com.tutorialapp.data.database.Tutorial>
-
     companion object {
         const val BASE_URL = "http://appservice-mongodb.herokuapp.com/mongo/"
     }
