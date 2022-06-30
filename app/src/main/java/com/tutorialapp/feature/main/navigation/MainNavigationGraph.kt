@@ -12,7 +12,7 @@ import com.tutorialapp.feature.start.StartScreen
 
 @Composable
 fun MainNavigationGraph(state: AppState, navController: NavHostController){
-    NavHost(navController, startDestination = "start"){
+    NavHost(navController, startDestination = "open"){
         composable(BottomNavigationItem.Start.routeName){
             StartScreen()
         }

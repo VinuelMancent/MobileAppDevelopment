@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tutorialApp</string>
+    <string name="app_name">Futorial</string>
     <string name="startscreen_navigation">Start Screen</string>
     <string name="open_tutorial_navigation">Open Tutorial</string>
     <string name="create_tutorial_navigation">Create Tutorial</string>
