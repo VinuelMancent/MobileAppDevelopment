@@ -15,12 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.tutorialapp.R
+
 import com.tutorialapp.domain.Tutorial
-import com.tutorialapp.feature.open.uploadButtonToDatabase
 import kotlin.reflect.KFunction2
 
 @Composable

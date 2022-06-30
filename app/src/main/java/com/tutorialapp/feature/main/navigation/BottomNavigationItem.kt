@@ -8,9 +8,9 @@ sealed class BottomNavigationItem {
     abstract val icon: Int
 
     object Start: BottomNavigationItem(){
-        override val routeName = "start"
+        override val routeName = "find tutorials"
         override val title = R.string.startscreen_navigation
-        override val icon = R.drawable.ic_baseline_search_24 //platzhalter
+        override val icon = R.drawable.ic_baseline_search_24
     }
     object CreateTutorial : BottomNavigationItem(){
         override val routeName = "create"
