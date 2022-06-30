@@ -32,3 +32,7 @@ Wenn das Tutorial fertig ist muss man nur auf "Finish Tutorial" drücken, und sc
 <img alt="search screen" height="400" src="Screenshots/Search.png"/>
 
 Wenn man nach Tutorials suchen möchte muss man einfach auf den Knopf "Load Tutorials from the Web" drücken, woraufhin alle online vorhandenen Tutorials geladen werden
+
+## WebServer
+
+Die Kommunikation zur MongoDB läuft über einen eigens dafür geschriebenen WebServer der (hier)[https://github.com/VinuelMancent/appDevService] einzusehen ist. Der Branch, von dem deployed wurde, heißt golang2 (es gab ein paar Probleme mit dem Deployen von einem in C# geschriebenen Server bei heroku, daher musste ein bisschen experimentiert werden)
