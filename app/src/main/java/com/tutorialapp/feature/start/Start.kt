@@ -30,7 +30,7 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
         if(tutorials != null) {
 
             LazyColumn {
-                itemsIndexed(tutorials!!) { _, item ->
+                itemsIndexed(tutorials) { _, item ->
                     val buttonText: MutableState<String> =
                         remember { mutableStateOf<String>("Download") }
                     val downloaded: Boolean = isLocallyAvailable(item.id, localTutorials)
