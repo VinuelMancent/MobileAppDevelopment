@@ -33,9 +33,8 @@ class StartScreenViewModel : ViewModel(){
                 .build()
                 .create(WebService::class.java)
 
-            mutableLiveData.value = webService.getAllTutorials()
+            mutableLiveData.value = webService.getAllTutorials().body()
         }
-        System.out.println(tutorials)
         return tutorials
     }
 

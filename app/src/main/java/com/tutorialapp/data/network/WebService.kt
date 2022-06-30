@@ -14,7 +14,7 @@ interface WebService {
     suspend fun createTutorial(@Body json: Tutorial): Response<ResponseBody>
 
     @GET("getAll")
-    suspend fun getAllTutorials(): MutableList<Tutorial>
+    suspend fun getAllTutorials(): Response<MutableList<Tutorial>>
 
     @POST("getOne")
     suspend fun getOneTutorial(@Body id: Int): MutableState<com.tutorialapp.data.database.Tutorial>

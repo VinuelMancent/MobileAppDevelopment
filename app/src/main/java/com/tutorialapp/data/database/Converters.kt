@@ -15,7 +15,7 @@ object Converters {
     }
     @TypeConverter
     fun listOfStepsFromDb(steps: String): List<TutorialStep>{
-        if(steps == "" || steps == null){
+        if(steps == ""){
             return emptyList()
         }
         val itemType = object : TypeToken<List<TutorialStep>>() {}.type
