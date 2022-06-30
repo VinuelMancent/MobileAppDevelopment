@@ -29,7 +29,6 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
 
         if(tutorials != null) {
 
-
             LazyColumn {
                 itemsIndexed(tutorials!!) { _, item ->
                     val buttonText: MutableState<String> =
@@ -78,6 +77,8 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
                     }
                 }
             }
+        }else{
+            Text("Sadly there aren't any Tutorials available at the moment")
         }
     }
 }

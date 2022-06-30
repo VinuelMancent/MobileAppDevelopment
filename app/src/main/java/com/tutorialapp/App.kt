@@ -20,12 +20,6 @@ class App : Application() {
                 if (BuildConfig.DEBUG) fallbackToDestructiveMigration()
             }
             .build()
-
-
-        scope.launch {
-
-        }
-
     }
 
 
