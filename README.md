@@ -10,7 +10,7 @@ Futorial hat 3 Screens:
 
 ### Start Screen
 
-![start screen](Screenshots/Startpage.png =250x)
+![start screen](Screenshots/Startpage.png)
 
 Der Startscreen gibt eine Übersicht über alle lokal vorhandenen Tutorials. 
 
@@ -24,7 +24,7 @@ Wenn ein Tutorial noch nicht hochgeladen wurde erscheint ein Button, der genau d
 
 ### Create Screen
 
-![create screen](Screenshots/Startpage_upload.png)
+![create screen](Screenshots/Create.png)
 
 Um ein neues Tutorial zu erstellen muss man auf die Create seite gehen. Dort ist bereits ein Formular geöffnet, bei dem man den Namen seines Tutorials sowie die einzelnen Schritte angeben kann. 
 Wenn das Tutorial fertig ist muss man nur auf "Finish Tutorial" drücken, und schon wird das Tutorial lokal gespeichert. 
