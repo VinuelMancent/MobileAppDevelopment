@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -15,40 +14,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-
 import com.tutorialapp.domain.Tutorial
 import kotlin.reflect.KFunction2
 
 @Composable
 fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButtonClicked:() -> Unit, tutorials: List<Tutorial>, localTutorials: List<com.tutorialapp.data.database.Tutorial>){
 
-    Column(){
+    Column {
         Button(onClick = onLoadButtonClicked) {
             Text("Load Tutorials from the Web")
         }
 
 
         LazyColumn {
-            itemsIndexed(tutorials) {index, item ->
+            itemsIndexed(tutorials) {_, item ->
                 val buttonText : MutableState<String> = remember{ mutableStateOf<String>("Download")}
                 val downloaded : Boolean = isLocallyAvailable(item.id, localTutorials)
                 if(downloaded){
                     buttonText.value = "downloaded"
                 }
-                /*
-                Row{
-                    Text(item.title)
-                    System.out.println(item.title)
-                    Button(
-                        onClick = { onDownloadButtonClicked(item.id, item) },
-                    ){
-                        Icon(contentDescription = "", painter = painterResource(R.drawable.ic_baseline_file_download_24))
-                    }
-                }
-                 */
                 Box(modifier = Modifier
                     .padding(5.dp)
                     .width(380.dp)
@@ -76,7 +62,6 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
                         enabled = !downloaded
                     ){
                         Text(buttonText.value)
-                        //Icon(contentDescription = "", painter = painterResource(R.drawable.ic_baseline_file_download_24))
                     }
                 }
             }
@@ -87,7 +72,7 @@ fun Start(onDownloadButtonClicked: KFunction2<Int, Tutorial, Unit>, onLoadButton
 private fun isLocallyAvailable(id: Int, localTutorials: List<com.tutorialapp.data.database.Tutorial>) : Boolean{
     for(tutorial in localTutorials){
         if(id == tutorial.id)
-            return true;
+            return true
     }
-    return false;
+    return false
 }

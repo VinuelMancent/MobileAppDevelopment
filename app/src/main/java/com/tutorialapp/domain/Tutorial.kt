@@ -2,7 +2,6 @@ package com.tutorialapp.domain
 
 import com.google.gson.Gson
 
-//ToDo: sich überlegen was alles in einem Tutorial vorhanden sein muss
 data class Tutorial(
     val id: Int,
     val title: String,
@@ -44,9 +43,3 @@ val allTutorials = listOf(
         )
     )
 )
-
-fun TutorialToJson(): String{
-    val gson = Gson()
-    val tutorialsAsJson = gson.toJson(allTutorials)
-    return tutorialsAsJson
-}

@@ -72,7 +72,6 @@ fun ExpandableCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            //.border(2.dp, Color.LightGray, RoundedCornerShape(8.dp))
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 300,
@@ -101,7 +100,7 @@ fun ExpandableCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 if(!tutorial.uploaded){
-                    uploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = tutorial, updateTutorial = updateTutorial)
+                    UploadButtonToDatabase(onUploadButtonClicked = onUploadButtonClicked, tutorial = tutorial, updateTutorial = updateTutorial)
                 }
                 IconButton(
                     modifier = Modifier
@@ -144,7 +143,7 @@ fun ExpandableCard(
 }
 
 @Composable
-fun uploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutorial) -> Unit,onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial : com.tutorialapp.data.database.Tutorial){
+fun UploadButtonToDatabase(updateTutorial : (com.tutorialapp.data.database.Tutorial) -> Unit, onUploadButtonClicked: KFunction1<Tutorial, Unit>, tutorial : com.tutorialapp.data.database.Tutorial){
     val buttonText = remember {mutableStateOf("Upload")}
     val buttonClickable = remember {mutableStateOf(true)}
     Button(onClick = {
@@ -165,12 +164,12 @@ private fun databaseToDomainTutorial(tutorial: com.tutorialapp.data.database.Tut
     val result = Tutorial(
         id = tutorial.id,
         title = tutorial.title,
-        steps =  databaseStepsToDomainsteps(tutorial.steps)
+        steps =  databaseStepsToDomainSteps(tutorial.steps)
     )
     return result
 }
 
-private fun databaseStepsToDomainsteps(steps: List<com.tutorialapp.data.database.TutorialStep>) : List<TutorialStep>{
+private fun databaseStepsToDomainSteps(steps: List<com.tutorialapp.data.database.TutorialStep>) : List<TutorialStep>{
     val result = mutableListOf<TutorialStep>()
     for (element in steps) {
         result.add(

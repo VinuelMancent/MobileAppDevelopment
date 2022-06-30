@@ -16,12 +16,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 class StartScreenViewModel : ViewModel(){
     private val mutableLiveData = MutableLiveData<List<Tutorial>>(emptyList())
 
-    //getter für mutableLiveData
     fun getTutorials(): MutableLiveData<List<Tutorial>>{
         return mutableLiveData
     }
 
-    //updater für mutableLiveData
     fun loadTutorialsFromServer() : MutableList<Tutorial> {
         val loadTutorialsOnClick: () -> Unit = {
         }
@@ -36,9 +34,6 @@ class StartScreenViewModel : ViewModel(){
                 .create(WebService::class.java)
 
             mutableLiveData.value = webService.getAllTutorials()
-            //tutorials = webService.getAllTutorials()
-            //System.out.println(tutorials.toString())
-            //allTutorialsAsObjects = Gson().fromJson(allTutorials, Array<Tutorial>::class.java)
         }
         System.out.println(tutorials)
         return tutorials
@@ -63,14 +58,13 @@ class StartScreenViewModel : ViewModel(){
         }
     }
 
-    private fun domainToDatabaseTutorial(tutorial: Tutorial): com.tutorialapp.data.database.Tutorial{
-        var result: com.tutorialapp.data.database.Tutorial = com.tutorialapp.data.database.Tutorial(
+    private fun domainToDatabaseTutorial(tutorial: Tutorial): com.tutorialapp.data.database.Tutorial {
+        return com.tutorialapp.data.database.Tutorial(
             id = tutorial.id,
             title = tutorial.title,
-            steps =  domainStepsToDatabaseSteps(tutorial.steps),
+            steps = domainStepsToDatabaseSteps(tutorial.steps),
             uploaded = true,
         )
-        return result
     }
     private fun domainStepsToDatabaseSteps(steps: List<com.tutorialapp.domain.TutorialStep>) :List<com.tutorialapp.data.database.TutorialStep>{
         var result = mutableListOf<com.tutorialapp.data.database.TutorialStep>()
@@ -84,10 +78,4 @@ class StartScreenViewModel : ViewModel(){
         }
         return result
     }
-
-    //zweite funktion mit livedata
-    //return livedata objekt
-    //kann in der ui verwendet werden
-    //livedata muss upgedatet werden
-    //viewmodel: mutablelivedata
 }

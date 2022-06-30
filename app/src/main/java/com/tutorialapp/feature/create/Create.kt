@@ -20,40 +20,17 @@ import com.tutorialapp.domain.TutorialStep
 import java.util.*
 import kotlin.math.abs
 
-
-/*
-//test to simply try to print steps
-val step1 = TutorialStep(
-    id = 1,
-    content = "c1",
-)
-val step2 = TutorialStep(
-    id = 2,
-    content = "c2",
-)
-val step3 = TutorialStep(
-    id = 3,
-    content = "c3",
-)
-
-//
-*/
-
-//private var steps:MutableList<TutorialStep> = mutableStateListOf(step1, step2, step3)
 private var steps:MutableList<TutorialStep> = mutableStateListOf()
 private var counter: Int = 1
 private var title: String = ""
 private var titleTextField: Unit = Unit
 
-//SCHÖN MACHEN
+
 @Composable
 fun Create(addTutorial: (Tutorial) -> Unit){
-    Column() {
-        TutorialNameTextField() //evtl enter taste deaktivieren
-        //Divider(color = Color.Blue, thickness = 1.dp)
-        ShowExistingSteps(addTutorial) //evtl image
-        //Divider(color = Color.Blue, thickness = 1.dp)
-        //AddStep() //möglichkeit für bilder(?)
+    Column {
+        TutorialNameTextField()
+        ShowExistingSteps(addTutorial)
     }
 }
 
@@ -72,22 +49,10 @@ fun TutorialNameTextField(){
             .padding(8.dp)
             .width(400.dp)
     )
-    //title = titleTextField.toString()
 }
-
-/*
-@Composable
-fun showExistingSteps(){
-    //für jeden bereits vorhandenen schritt
-    steps.forEach{
-        Text(it.id.toString())
-        Text(it.content)
-    }
-}*/
 
 @Composable
 fun ShowExistingSteps(AddTutorial: (Tutorial) -> Unit){
-    //für jeden bereits vorhandenen schritt
     LazyColumn (
         Modifier
             .fillMaxWidth()
@@ -157,9 +122,6 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
                 uploaded = false,
             )
             AddTutorial(tutorial)
-            //if(titleTextField is TextFieldKt)
-            titleTextField =
-            //clear name
             steps.clear()
             counter = 0
         }, Modifier.padding(start = 8.dp)
@@ -169,7 +131,6 @@ fun FinishCreatingTutorial(AddTutorial: (Tutorial) -> Unit){
 private fun generateID() : Int{
     val uuid = UUID.randomUUID()
     return abs(uuid.hashCode())
-    //return Random.nextInt(10000,99999)
 }
 
 private fun mutableListToList(mutableList: MutableList<TutorialStep>): List<com.tutorialapp.data.database.TutorialStep>{
@@ -185,18 +146,3 @@ private fun mutableListToList(mutableList: MutableList<TutorialStep>): List<com.
     }
     return result
 }
-/*
-fun TakePicture() {
-    val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(...)).build()
-    imageCapture.takePicture(outputFileOptions, cameraExecutor,
-        object : ImageCapture.OnImageSavedCallback {
-            override fun onError(error: ImageCaptureException)
-            {
-                // insert your code here.
-            }
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                // insert your code here.
-            }
-        })
-}*/
-

@@ -12,16 +12,7 @@ fun OpenScreen(viewModel: OpenScreenViewModel = androidx.lifecycle.viewmodel.com
     //OpenScreenUI(tutorials)
     Open(viewModel::updateLocalTutorialToUploaded,viewModel::uploadToDB, tutorials)
 }
-/*
-@Composable
-private fun OpenScreenUI(tutorials: List<Tutorial>){
-    val scrollState = rememberLazyListState()
-    LazyColumn(state = scrollState) {
-        itemsIndexed(tutorials){ _, item ->
-            Text(item.title)
-        }
-    }
-}*/
+
 @Preview
 @Composable
 fun OpenScreen_Preview() {

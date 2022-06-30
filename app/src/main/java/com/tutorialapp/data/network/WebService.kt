@@ -20,7 +20,7 @@ interface WebService {
     suspend fun getOneTutorial(@Body id: Int): MutableState<com.tutorialapp.data.database.Tutorial>
 
     companion object {
-        const val BASE_URL = "http://appservice-mongodb.herokuapp.com/mongo/";
+        const val BASE_URL = "http://appservice-mongodb.herokuapp.com/mongo/"
     }
 }
 

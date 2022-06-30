@@ -7,7 +7,6 @@ import kotlinx.coroutines.launch
 
 class CreateScreenVewModel : ViewModel() {
 
-    //upload to local db
     fun saveTutorialInLocalDB(tutorial: com.tutorialapp.data.database.Tutorial) {
         viewModelScope.launch{
             SaveLocalTutorialUseCase()(tutorial)
