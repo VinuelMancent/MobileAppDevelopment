@@ -33,7 +33,7 @@ Wenn das Tutorial fertig ist muss man nur auf "Finish Tutorial" drücken, und sc
 
 Wenn man nach Tutorials suchen möchte muss man einfach auf den Knopf "Load Tutorials from the Web" drücken, woraufhin alle online vorhandenen Tutorials geladen werden.
 
-<img alt="search screen" height="400" src="Screenshots/Search_open.png"/>
+<img alt="search screen detailed" height="400" src="Screenshots/Search_open.jpg"/>
 
 Nachdem man die vorhandenen Tutorials aus der Datenbank geladen hat sieht man eine Liste der Tutorials aus der Datenbank. Jedes Tutorial besitzt einen Button zum herunterladen, welcher nach erfolgtem Download deaktiviert wird.
 
